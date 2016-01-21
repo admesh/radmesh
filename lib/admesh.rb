@@ -1,5 +1,4 @@
 require 'ffi'
-include ObjectSpace
 
 # High level wrapper around ADMesh
 module ADMesh
@@ -85,11 +84,15 @@ module ADMesh
       @stl_value = CADMesh::STLFile.new @stl_ptr
       CADMesh.stl_open(@stl_ptr, path)
       fail IOError, "Could not open #{path}" if error?
-      define_finalizer(self, proc { |_id| CADMesh.stl_close(@stl_ptr) })
+      ObjectSpace.define_finalizer self, self.class.finalize(@stl_ptr)
     end
 
     def error?
       @stl_value[:error] == 1
+    end
+
+    def self.finalize(ptr)
+      proc { CADMesh.stl_close(ptr) }
     end
   end
 end
