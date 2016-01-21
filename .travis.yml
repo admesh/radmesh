@@ -1,0 +1,28 @@
+language: ruby
+rvm:
+- 1.9.3
+- 2.0.0
+- 2.1.8
+- 2.2.4
+- 2.3.0
+- ruby-head
+- jruby-19mode
+env:
+- ADMESH=0.98.2
+cache:
+  directories:
+  - $TRAVIS_BUILD_DIR/admesh-$ADMESH
+before_install:
+- if [ ! -f admesh-$ADMESH/.libs/admesh ]; then
+      wget https://github.com/admesh/admesh/releases/download/v$ADMESH/admesh-$ADMESH.tar.gz;
+      tar -zxf admesh-$ADMESH.tar.gz;
+      cd admesh-$ADMESH;
+      "./configure";
+      make;
+      mkdir src/admesh;
+      cp src/stl.h src/admesh/stl.h;
+      cd ..;
+  fi
+install:
+- gem install rake ffi minitest
+script: LD_LIBRARY_PATH=admesh-$ADMESH/.libs rake test
