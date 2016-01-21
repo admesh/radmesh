@@ -24,5 +24,7 @@ before_install:
       cd ..;
   fi
 install:
-- gem install rake ffi minitest
-script: LD_LIBRARY_PATH=admesh-$ADMESH/.libs rake test
+- gem install rake ffi minitest rubocop
+script:
+- rubocop
+- LD_LIBRARY_PATH=admesh-$ADMESH/.libs rake test
