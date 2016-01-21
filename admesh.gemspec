@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
   s.description = 'Ruby wrapper around ADMesh'
   s.authors     = ['Miro Hrončok']
   s.email       = 'miro@hroncok.cz'
-  s.files       = ['lib/admesh.rb']
+  s.files       = Dir.glob('lib/*.rb')
   s.homepage    =
     'https://github.com/hroncok/rubygem-admesh'
   s.license = 'GPL-2.0+'
