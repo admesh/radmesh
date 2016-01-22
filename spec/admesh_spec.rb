@@ -17,6 +17,21 @@ describe ADMesh::STL do
       @stl.calculate_volume!
       @stl.stats[:volume].must_equal 1
     end
+    it 'must have size 1 for each axis' do
+      [:x, :y, :z].each do |axis|
+        @stl.stats[:size][axis].must_equal 1
+      end
+    end
+    it 'must have max 1 for each axis' do
+      [:x, :y, :z].each do |axis|
+        @stl.stats[:max][axis].must_equal 1
+      end
+    end
+    it 'must have min 0 for each axis' do
+      [:x, :y, :z].each do |axis|
+        @stl.stats[:min][axis].must_equal 0
+      end
+    end
     it 'must be recognized as ASCII' do
       @stl.stats[:type].must_equal :ascii
     end
