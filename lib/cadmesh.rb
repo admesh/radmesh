@@ -5,6 +5,13 @@ module CADMesh
   extend FFI::Library
   ffi_lib 'admesh.so.1.0.0'
 
+  # for JRuby
+  begin
+    CharArray = FFI::StructLayout::CharArray
+  rescue NameError
+    CharArray = FFI::StructLayout::CharArrayProxy
+  end
+
   enum :STLType, [:binary, :ascii, :inmemory]
 
   # FFI::Struct that has to_hash
@@ -18,7 +25,7 @@ module CADMesh
     end
 
     def self.value_to_value(value)
-      return value.to_s if value.class == FFI::StructLayout::CharArray
+      return value.to_s if value.class == CharArray
       return value.to_hash if value.class == HashableStruct
       value
     end
