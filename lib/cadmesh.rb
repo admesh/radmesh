@@ -3,7 +3,7 @@ require 'ffi'
 # Low level wrapper around C admesh library
 module CADMesh
   extend FFI::Library
-  ffi_lib 'admesh'
+  ffi_lib 'admesh.so.1.0.0'
 
   enum :STLType, [:binary, :ascii, :inmemory]
 
@@ -25,7 +25,6 @@ module CADMesh
            :bounding_diameter, :float,
            :shortest_edge, :float,
            :volume, :float,
-           #:surface_area, :float,
            :number_of_blocks, :uint,
            :connected_edges, :int,
            :connected_facets_1_edge, :int,
