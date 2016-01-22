@@ -67,7 +67,61 @@ module CADMesh
 
   attach_function :stl_open, [:pointer, :string], :void
   attach_function :stl_close, [:pointer], :void
+  attach_function :stl_stats_out, [:pointer, :pointer, :string], :void
+  attach_function :stl_print_edges, [:pointer, :pointer], :void
+  attach_function :stl_print_neighbors, [:pointer, :string], :void
+  attach_function :stl_put_little_int, [:pointer, :int], :void
+  attach_function :stl_put_little_float, [:pointer, :float], :void
+  attach_function :stl_write_ascii, [:pointer, :string, :string], :void
+  attach_function :stl_write_binary, [:pointer, :string, :string], :void
+  attach_function :stl_write_binary_block, [:pointer, :pointer], :void
+  attach_function :stl_check_facets_exact, [:pointer], :void
+  attach_function :stl_check_facets_nearby, [:pointer, :float], :void
+  attach_function :stl_remove_unconnected_facets, [:pointer], :void
+  attach_function :stl_write_vertex, [:pointer, :int, :int], :void
+  attach_function :stl_write_facet, [:pointer, :string, :int], :void
+  attach_function :stl_write_neighbor, [:pointer, :int], :void
+  attach_function :stl_write_quad_object, [:pointer, :string], :void
+  attach_function :stl_verify_neighbors, [:pointer], :void
+  attach_function :stl_fill_holes, [:pointer], :void
+  attach_function :stl_fix_normal_directions, [:pointer], :void
+  attach_function :stl_fix_normal_values, [:pointer], :void
+  attach_function :stl_reverse_all_facets, [:pointer], :void
+  attach_function :stl_translate, [:pointer, :float, :float, :float], :void
+  attach_function :stl_translate_relative, [:pointer, :float,
+                                            :float, :float], :void
+  attach_function :stl_scale_versor, [:pointer, :pointer], :void
+  attach_function :stl_scale, [:pointer, :float], :void
+  attach_function :stl_rotate_x, [:pointer, :float], :void
+  attach_function :stl_rotate_y, [:pointer, :float], :void
+  attach_function :stl_rotate_z, [:pointer, :float], :void
+  attach_function :stl_mirror_xy, [:pointer], :void
+  attach_function :stl_mirror_yz, [:pointer], :void
+  attach_function :stl_mirror_xz, [:pointer], :void
+  attach_function :stl_open_merge, [:pointer, :string], :void
+  attach_function :stl_invalidate_shared_vertices, [:pointer], :void
+  attach_function :stl_generate_shared_vertices, [:pointer], :void
+  attach_function :stl_write_obj, [:pointer, :string], :void
+  attach_function :stl_write_off, [:pointer, :string], :void
+  attach_function :stl_write_dxf, [:pointer, :string, :string], :void
+  attach_function :stl_write_vrml, [:pointer, :string], :void
+  attach_function :stl_calculate_normal, [:pointer, :pointer], :void
+  attach_function :stl_normalize_vector, [:pointer], :void
+  attach_function :stl_calculate_volume, [:pointer], :void
+
+  attach_function :stl_repair, [:pointer, :int, :int, :int,
+                                :float, :int, :float, :int,
+                                :int, :int, :int, :int, :int,
+                                :int, :int], :void
+
+  attach_function :stl_initialize, [:pointer], :void
+  attach_function :stl_count_facets, [:pointer, :string], :void
+  attach_function :stl_allocate, [:pointer], :void
+  attach_function :stl_read, [:pointer, :int, :int], :void
+  attach_function :stl_reallocate, [:pointer], :void
+  attach_function :stl_add_facet, [:pointer, :pointer], :void
+  attach_function :stl_get_size, [:pointer], :void
+
   attach_function :stl_clear_error, [:pointer], :void
   attach_function :stl_get_error, [:pointer], :int
-  attach_function :stl_calculate_volume, [:pointer], :void
 end
