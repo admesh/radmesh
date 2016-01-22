@@ -38,21 +38,8 @@ module ADMesh
       proc { CADMesh.stl_close(ptr) }
     end
 
-    def self.struct_to_hash(struct)
-      hash = {}
-      struct.members.each do |key|
-        hash[key] = struct[key]
-      end
-      hash
-    end
-
     def stats
-      stats = self.class.struct_to_hash(@stl_value[:stats])
-      stats[:header] = stats[:header].to_s
-      [:min, :max, :size].each do |key|
-        stats[key] = self.class.struct_to_hash(stats[key])
-      end
-      stats
+      @stl_value[:stats].to_hash
     end
 
     def calculate_volume!

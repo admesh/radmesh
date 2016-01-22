@@ -7,15 +7,32 @@ module CADMesh
 
   enum :STLType, [:binary, :ascii, :inmemory]
 
+  # FFI::Struct that has to_hash
+  class HashableStruct < FFI::Struct
+    def to_hash
+      hash = {}
+      members.each do |key|
+        hash[key] = self.class.value_to_value(self[key])
+      end
+      hash
+    end
+
+    def self.value_to_value(value)
+      return value.to_s if value.class == FFI::StructLayout::CharArray
+      return value.to_hash if value.class == HashableStruct
+      value
+    end
+  end
+
   # stl_vertex struct
-  class STLVertex < FFI::Struct
+  class STLVertex < HashableStruct
     layout :x, :float,
            :y, :float,
            :z, :float
   end
 
   # stl_stats struct
-  class STLStats < FFI::Struct
+  class STLStats < HashableStruct
     layout :header, [:char, 81],
            :type, :STLType,
            :number_of_facets, :int,
@@ -51,7 +68,7 @@ module CADMesh
   end
 
   # stl_file struct
-  class STLFile < FFI::Struct
+  class STLFile < HashableStruct
     layout :fp, :pointer,
            :facet_start, :pointer,
            :edge_start, :pointer,
