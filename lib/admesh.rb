@@ -13,12 +13,25 @@ module ADMesh
       @stl_ptr = FFI::MemoryPointer.new CADMesh::STLFile, 1
       @stl_value = CADMesh::STLFile.new @stl_ptr
       CADMesh.stl_open(@stl_ptr, path)
-      fail IOError, "Could not open #{path}" if error?
+      error_control_proc(IOError, "Could not open #{path}").call
       ObjectSpace.define_finalizer self, self.class.finalize(@stl_ptr)
     end
 
     def error?
-      @stl_value[:error] == 1
+      CADMesh.stl_get_error(@stl_ptr) == 1
+    end
+
+    def clear_error!
+      CADMesh.stl_clear_error(@stl_ptr)
+    end
+
+    def error_control_proc(exception, message)
+      proc do
+        if error?
+          clear_error!
+          fail exception, message
+        end
+      end
     end
 
     def self.finalize(ptr)

@@ -67,4 +67,6 @@ module CADMesh
 
   attach_function :stl_open, [:pointer, :string], :void
   attach_function :stl_close, [:pointer], :void
+  attach_function :stl_clear_error, [:pointer], :void
+  attach_function :stl_get_error, [:pointer], :int
 end
