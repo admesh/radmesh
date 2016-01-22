@@ -19,6 +19,12 @@ describe ADMesh::STL do
     it 'must be recognized as ASCII' do
       @stl.stats[:type].must_equal :ascii
     end
+    it 'must be able to write as ASCII' do
+      @stl.write_ascii '.block_ascii.stl'
+    end
+    it 'must be able to write as binary' do
+      @stl.write_binary '.block_binary.stl'
+    end
   end
 
   describe 'when opening an non-existing file' do

@@ -50,5 +50,15 @@ module ADMesh
     def calculate_volume!
       CADMesh.stl_calculate_volume(@stl_ptr)
     end
+
+    def write_ascii(path, label = 'admesh')
+      CADMesh.stl_write_ascii(@stl_ptr, path, label)
+      error_control_proc(IOError, "Could not write to #{path}").call
+    end
+
+    def write_binary(path, label = 'admesh')
+      CADMesh.stl_write_binary(@stl_ptr, path, label)
+      error_control_proc(IOError, "Could not write to #{path}").call
+    end
   end
 end
