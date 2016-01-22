@@ -11,6 +11,7 @@ env:
 cache:
   directories:
   - $TRAVIS_BUILD_DIR/admesh-$ADMESH
+  - $HOME/.rvm
 before_install:
 - if [ ! -f admesh-$ADMESH/.libs/admesh ]; then
       wget https://github.com/admesh/admesh/releases/download/v$ADMESH/admesh-$ADMESH.tar.gz;
