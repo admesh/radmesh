@@ -69,4 +69,5 @@ module CADMesh
   attach_function :stl_close, [:pointer], :void
   attach_function :stl_clear_error, [:pointer], :void
   attach_function :stl_get_error, [:pointer], :int
+  attach_function :stl_calculate_volume, [:pointer], :void
 end

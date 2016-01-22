@@ -37,5 +37,18 @@ module ADMesh
     def self.finalize(ptr)
       proc { CADMesh.stl_close(ptr) }
     end
+
+    def stats
+      stats = {}
+      @stl_value[:stats].members.each do |key|
+        stats[key] = @stl_value[:stats][key]
+      end
+      stats[:header] = stats[:header].to_s
+      stats
+    end
+
+    def calculate_volume!
+      CADMesh.stl_calculate_volume(@stl_ptr)
+    end
   end
 end
