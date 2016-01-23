@@ -23,6 +23,7 @@ module ADMesh
 
     def clear_error!
       CADMesh.stl_clear_error(@stl_ptr)
+      self
     end
 
     def error_control_proc(exception, message)
@@ -44,16 +45,19 @@ module ADMesh
 
     def calculate_volume!
       CADMesh.stl_calculate_volume(@stl_ptr)
+      self
     end
 
     def write_ascii(path, label = 'admesh')
       CADMesh.stl_write_ascii(@stl_ptr, path, label)
       error_control_proc(IOError, "Could not write to #{path}").call
+      self
     end
 
     def write_binary(path, label = 'admesh')
       CADMesh.stl_write_binary(@stl_ptr, path, label)
       error_control_proc(IOError, "Could not write to #{path}").call
+      self
     end
   end
 end

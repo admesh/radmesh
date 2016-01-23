@@ -14,8 +14,7 @@ describe ADMesh::STL do
       @stl.stats[:header].must_equal 'solid  admesh'
     end
     it 'must calculate volume to 1' do
-      @stl.calculate_volume!
-      @stl.stats[:volume].must_equal 1
+      @stl.calculate_volume!.stats[:volume].must_equal 1
     end
     it 'must have size 1 for each axis' do
       [:x, :y, :z].each do |axis|
