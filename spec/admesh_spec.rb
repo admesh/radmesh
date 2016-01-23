@@ -186,6 +186,11 @@ describe ADMesh::STL do
     it 'must not mirror by bad axis' do
       proc { @stl.mirror! :x, :o }.must_raise ArgumentError
     end
+    it 'must open merge other STLs' do
+      @stl.translate! 10, 10, 10
+      @stl.open_merge! 'block.stl'
+      @stl.calculate_volume!.stats[:volume].must_equal 2
+    end
   end
 
   describe 'when opening an non-existing file' do

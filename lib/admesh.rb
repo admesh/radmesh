@@ -240,5 +240,11 @@ module ADMesh
         raise ArgumentError, "invalid axis pair #{args[0]}#{args[1]}"
       end
     end
+
+    def open_merge!(path)
+      CADMesh.stl_open_merge(@stl_ptr, path)
+      error_control_proc(IOError, "Could not open #{path}").call
+      self
+    end
   end
 end
