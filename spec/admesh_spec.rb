@@ -56,6 +56,31 @@ describe ADMesh::STL do
     it 'must be able to write as VRML' do
       @stl.write_vrml '.block.vrml'
     end
+    it 'must check nerby facets without blow up' do
+      @stl.check_facets_nearby! 0.001
+    end
+    it 'must remove unconnected facets without blow up' do
+      @stl.remove_unconnected_facets!
+    end
+    it 'must verify neighbors without blow up' do
+      skip 'this is very verbose'
+      @stl.verify_neighbors!
+    end
+    it 'must fill holes without blow up' do
+      @stl.fill_holes!
+    end
+    it 'must fix normal directions without blow up' do
+      @stl.fix_normal_directions!
+    end
+    it 'must fix normal values without blow up' do
+      @stl.fix_normal_values!
+    end
+    it 'must reverse all facets correctly' do
+      @stl.reverse_all_facets!
+      @stl.calculate_volume!.stats[:volume].must_equal(-1)
+      @stl.reverse_all_facets!
+      @stl.calculate_volume!.stats[:volume].must_equal 1
+    end
   end
 
   describe 'when opening an non-existing file' do

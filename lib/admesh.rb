@@ -99,6 +99,41 @@ module ADMesh
       self
     end
 
+    def check_facets_nearby!(tolerance)
+      CADMesh.stl_check_facets_nearby(@stl_ptr, tolerance)
+      self
+    end
+
+    def remove_unconnected_facets!
+      CADMesh.stl_remove_unconnected_facets(@stl_ptr)
+      self
+    end
+
+    def verify_neighbors!
+      CADMesh.stl_verify_neighbors(@stl_ptr)
+      self
+    end
+
+    def fill_holes!
+      CADMesh.stl_fill_holes(@stl_ptr)
+      self
+    end
+
+    def fix_normal_directions!
+      CADMesh.stl_fix_normal_directions(@stl_ptr)
+      self
+    end
+
+    def fix_normal_values!
+      CADMesh.stl_fix_normal_values(@stl_ptr)
+      self
+    end
+
+    def reverse_all_facets!
+      CADMesh.stl_reverse_all_facets(@stl_ptr)
+      self
+    end
+
     def generate_shared_vertices!
       check_facets_exact! unless @exact
       CADMesh.stl_generate_shared_vertices(@stl_ptr)
