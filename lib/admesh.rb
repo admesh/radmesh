@@ -211,5 +211,28 @@ module ADMesh
     def rotate!(axis, angle)
       send("rotate_#{axis}!", angle)
     end
+
+    def mirror_xy!
+      CADMesh.stl_mirror_xy(@stl_ptr)
+      self
+    end
+
+    def mirror_yz!
+      CADMesh.stl_mirror_yz(@stl_ptr)
+      self
+    end
+
+    def mirror_xz!
+      CADMesh.stl_mirror_xz(@stl_ptr)
+      self
+    end
+
+    def mirror!(*args)
+      args = args[0] if args.size == 1
+      fail ArgumentError,
+           "wrong number of arguments (#{args.size} for 2)" if args.size != 2
+      args.sort!
+      send("mirror_#{args[0]}#{args[1]}!")
+    end
   end
 end

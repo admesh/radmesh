@@ -4,6 +4,7 @@ require 'admesh'
 describe ADMesh::STL do
   before do
     @stl = ADMesh::STL.new 'block.stl'
+    @axes = [:x, :y, :z]
   end
 
   describe 'block.stl' do
@@ -17,17 +18,17 @@ describe ADMesh::STL do
       @stl.calculate_volume!.stats[:volume].must_equal 1
     end
     it 'must have size 1 for each axis' do
-      [:x, :y, :z].each do |axis|
+      @axes.each do |axis|
         @stl.stats[:size][axis].must_equal 1
       end
     end
     it 'must have max 1 for each axis' do
-      [:x, :y, :z].each do |axis|
+      @axes.each do |axis|
         @stl.stats[:max][axis].must_equal 1
       end
     end
     it 'must have min 0 for each axis' do
-      [:x, :y, :z].each do |axis|
+      @axes.each do |axis|
         @stl.stats[:min][axis].must_equal 0
       end
     end
@@ -122,15 +123,15 @@ describe ADMesh::STL do
     end
     it 'must scale by factor' do
       @stl.scale! 50
-      [:x, :y, :z].each do |axis|
+      @axes.each do |axis|
         @stl.stats[:size][axis].must_equal 50
       end
       @stl.scale! 10
-      [:x, :y, :z].each do |axis|
+      @axes.each do |axis|
         @stl.stats[:size][axis].must_equal 500
       end
       @stl.scale!(1.0 / 500)
-      [:x, :y, :z].each do |axis|
+      @axes.each do |axis|
         @stl.stats[:size][axis].must_equal 1
       end
     end
@@ -153,13 +154,24 @@ describe ADMesh::STL do
       @stl.stats[:size][:z].must_equal 1000
     end
     it 'must rotate by each axis' do
-      axes = [:x, :y, :z]
-      axes.each_with_index do |axis, idx|
+      @axes.each_with_index do |axis, idx|
         @stl.rotate!(axis, 45)
-        check_axis = axes[(idx + 1) % 3]
+        check_axis = @axes[(idx + 1) % 3]
         @stl.stats[:size][axis].must_be_within_epsilon 1
         @stl.stats[:size][check_axis].must_be_within_epsilon 1.414
         @stl.rotate!(axis, -45)
+      end
+    end
+    it 'must mirror by each axis pair' do
+      @axes.each_with_index do |axis, idx|
+        a1 =  @axes[(idx + 1) % 3]
+        a2 =  @axes[(idx + 2) % 3]
+        @stl.mirror! a1, a2 # two arguments
+        @stl.stats[:min][axis].must_equal(-1)
+        @stl.stats[:max][axis].must_equal 0
+        @stl.mirror! [a1, a2] # one array argument
+        @stl.stats[:min][axis].must_equal 0
+        @stl.stats[:max][axis].must_equal 1
       end
     end
   end
