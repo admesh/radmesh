@@ -81,6 +81,45 @@ describe ADMesh::STL do
       @stl.reverse_all_facets!
       @stl.calculate_volume!.stats[:volume].must_equal 1
     end
+    it 'must translate to absolute coordinates' do
+      @stl.translate! 10, 20, 30
+      @stl.stats[:min][:x].must_equal 10
+      @stl.stats[:min][:y].must_equal 20
+      @stl.stats[:min][:z].must_equal 30
+    end
+    it 'must translate to absolute coordinates array' do
+      @stl.translate! [10, 20, 30]
+      @stl.stats[:min][:x].must_equal 10
+      @stl.stats[:min][:y].must_equal 20
+      @stl.stats[:min][:z].must_equal 30
+    end
+    it 'must translate to absolute coordinates hash' do
+      @stl.translate! x: 10, y: 20, z: 30
+      @stl.stats[:min][:x].must_equal 10
+      @stl.stats[:min][:y].must_equal 20
+      @stl.stats[:min][:z].must_equal 30
+    end
+    it 'must translate by relative coordinates' do
+      @stl.translate_relative! 5, 10, 15
+      @stl.translate_relative! 5, 10, 15
+      @stl.stats[:min][:x].must_equal 10
+      @stl.stats[:min][:y].must_equal 20
+      @stl.stats[:min][:z].must_equal 30
+    end
+    it 'must translate by relative coordinates array' do
+      @stl.translate_relative! [5, 10, 15]
+      @stl.translate_relative! [5, 10, 15]
+      @stl.stats[:min][:x].must_equal 10
+      @stl.stats[:min][:y].must_equal 20
+      @stl.stats[:min][:z].must_equal 30
+    end
+    it 'must translate by relative coordinates hash' do
+      @stl.translate_relative! x: 5, y: 10, z: 15
+      @stl.translate_relative! x: 5, y: 10, z: 15
+      @stl.stats[:min][:x].must_equal 10
+      @stl.stats[:min][:y].must_equal 20
+      @stl.stats[:min][:z].must_equal 30
+    end
   end
 
   describe 'when opening an non-existing file' do

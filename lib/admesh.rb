@@ -140,5 +140,42 @@ module ADMesh
       @shared = true
       self
     end
+
+    def self.to_vec(arg)
+      begin
+        vec = [arg[:x], arg[:y], arg[:z]]
+      rescue
+        begin
+          vec = [arg.x, arg.y, arg.z]
+        rescue
+          vec = [arg[0], arg[1], arg[2]]
+        end
+      end
+      vec
+    end
+
+    def self.vector_probe(args)
+      if args.size == 3
+        vec = args
+      elsif args.size == 1
+        vec = to_vec(args[0])
+      else
+        fail ArgumentError,
+             "wrong number of arguments (#{args.size} for 1 or 3)"
+      end
+      vec
+    end
+
+    def translate!(*args)
+      vec = self.class.vector_probe args
+      CADMesh.stl_translate(@stl_ptr, vec[0], vec[1], vec[2])
+      self
+    end
+
+    def translate_relative!(*args)
+      vec = self.class.vector_probe args
+      CADMesh.stl_translate_relative(@stl_ptr, vec[0], vec[1], vec[2])
+      self
+    end
   end
 end
