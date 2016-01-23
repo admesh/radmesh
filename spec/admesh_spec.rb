@@ -120,6 +120,20 @@ describe ADMesh::STL do
       @stl.stats[:min][:y].must_equal 20
       @stl.stats[:min][:z].must_equal 30
     end
+    it 'must scale by factor' do
+      @stl.scale! 50
+      [:x, :y, :z].each do |axis|
+        @stl.stats[:size][axis].must_equal 50
+      end
+      @stl.scale! 10
+      [:x, :y, :z].each do |axis|
+        @stl.stats[:size][axis].must_equal 500
+      end
+      @stl.scale!(1.0 / 500)
+      [:x, :y, :z].each do |axis|
+        @stl.stats[:size][axis].must_equal 1
+      end
+    end
   end
 
   describe 'when opening an non-existing file' do

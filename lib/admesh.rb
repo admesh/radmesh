@@ -177,5 +177,10 @@ module ADMesh
       CADMesh.stl_translate_relative(@stl_ptr, vec[0], vec[1], vec[2])
       self
     end
+
+    def scale!(factor)
+      CADMesh.stl_scale(@stl_ptr, factor)
+      self
+    end
   end
 end
