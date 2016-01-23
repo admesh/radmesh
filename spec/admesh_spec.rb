@@ -162,6 +162,9 @@ describe ADMesh::STL do
         @stl.rotate!(axis, -45)
       end
     end
+    it 'must not rotate by bad axis' do
+      proc { @stl.rotate! :o, 45 }.must_raise ArgumentError
+    end
     it 'must mirror by each axis pair' do
       @axes.each_with_index do |axis, idx|
         a1 =  @axes[(idx + 1) % 3]
@@ -173,6 +176,15 @@ describe ADMesh::STL do
         @stl.stats[:min][axis].must_equal 0
         @stl.stats[:max][axis].must_equal 1
       end
+    end
+    it 'must not mirror by too many axes' do
+      proc { @stl.mirror! :x, :y, :z }.must_raise ArgumentError
+    end
+    it 'must not mirror by too few axes' do
+      proc { @stl.mirror! :x }.must_raise ArgumentError
+    end
+    it 'must not mirror by bad axis' do
+      proc { @stl.mirror! :x, :o }.must_raise ArgumentError
     end
   end
 

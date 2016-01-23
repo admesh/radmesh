@@ -210,6 +210,8 @@ module ADMesh
 
     def rotate!(axis, angle)
       send("rotate_#{axis}!", angle)
+    rescue
+      raise ArgumentError, "invalid axis #{axis}"
     end
 
     def mirror_xy!
@@ -232,7 +234,11 @@ module ADMesh
       fail ArgumentError,
            "wrong number of arguments (#{args.size} for 2)" if args.size != 2
       args.sort!
-      send("mirror_#{args[0]}#{args[1]}!")
+      begin
+        send("mirror_#{args[0]}#{args[1]}!")
+      rescue
+        raise ArgumentError, "invalid axis pair #{args[0]}#{args[1]}"
+      end
     end
   end
 end
