@@ -34,15 +34,27 @@ describe ADMesh::STL do
     it 'must be recognized as ASCII' do
       @stl.stats[:type].must_equal :ascii
     end
-    it 'must be able to write as ASCII' do
+    it 'must be able to write as ASCII STL' do
       @stl.write_ascii '.block_ascii.stl'
       stl_ascii = ADMesh::STL.new '.block_ascii.stl'
       stl_ascii.stats[:type].must_equal :ascii
     end
-    it 'must be able to write as binary' do
+    it 'must be able to write as binary STL' do
       @stl.write_binary '.block_binary.stl'
       stl_binary = ADMesh::STL.new '.block_binary.stl'
       stl_binary.stats[:type].must_equal :binary
+    end
+    it 'must be able to write as OBJ' do
+      @stl.write_obj '.block.obj'
+    end
+    it 'must be able to write as OFF' do
+      @stl.write_off '.block.off'
+    end
+    it 'must be able to write as DXF' do
+      @stl.write_dxf '.block.dxf'
+    end
+    it 'must be able to write as VRML' do
+      @stl.write_vrml '.block.vrml'
     end
   end
 

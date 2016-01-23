@@ -6,8 +6,12 @@ module ADMesh
   class STL
     attr_accessor :stl_ptr
     attr_accessor :stl_value
+    attr_accessor :exact
+    attr_accessor :shared
     private :stl_ptr
     private :stl_value
+    private :exact
+    private :shared
 
     def initialize(path)
       @stl_ptr = FFI::MemoryPointer.new CADMesh::STLFile, 1
@@ -15,6 +19,8 @@ module ADMesh
       CADMesh.stl_open(@stl_ptr, path)
       error_control_proc(IOError, "Could not open #{path}").call
       ObjectSpace.define_finalizer self, self.class.finalize(@stl_ptr)
+      @exact = false
+      @shared = false
     end
 
     def error?
@@ -57,6 +63,46 @@ module ADMesh
     def write_binary(path, label = 'admesh')
       CADMesh.stl_write_binary(@stl_ptr, path, label)
       error_control_proc(IOError, "Could not write to #{path}").call
+      self
+    end
+
+    def write_obj(path)
+      generate_shared_vertices! unless @shared
+      CADMesh.stl_write_obj(@stl_ptr, path)
+      error_control_proc(IOError, "Could not write to #{path}").call
+      self
+    end
+
+    def write_off(path)
+      generate_shared_vertices! unless @shared
+      CADMesh.stl_write_off(@stl_ptr, path)
+      error_control_proc(IOError, "Could not write to #{path}").call
+      self
+    end
+
+    def write_dxf(path, label = 'admesh')
+      CADMesh.stl_write_dxf(@stl_ptr, path, label)
+      error_control_proc(IOError, "Could not write to #{path}").call
+      self
+    end
+
+    def write_vrml(path)
+      generate_shared_vertices! unless @shared
+      CADMesh.stl_write_vrml(@stl_ptr, path)
+      error_control_proc(IOError, "Could not write to #{path}").call
+      self
+    end
+
+    def check_facets_exact!
+      CADMesh.stl_check_facets_exact(@stl_ptr)
+      @exact = true
+      self
+    end
+
+    def generate_shared_vertices!
+      check_facets_exact! unless @exact
+      CADMesh.stl_generate_shared_vertices(@stl_ptr)
+      @shared = true
       self
     end
   end
