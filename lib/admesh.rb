@@ -1,4 +1,5 @@
 require 'cadmesh'
+require 'ffi'
 
 # High level wrapper around ADMesh
 module ADMesh
@@ -180,6 +181,15 @@ module ADMesh
 
     def scale!(factor)
       CADMesh.stl_scale(@stl_ptr, factor)
+      self
+    end
+
+    def scale_versor!(*args)
+      vec = self.class.vector_probe args
+      FFI::MemoryPointer.new(:float, 3) do |p|
+        p.write_array_of_float(vec)
+        CADMesh.stl_scale_versor(@stl_ptr, p)
+      end
       self
     end
   end

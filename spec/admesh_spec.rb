@@ -134,6 +134,24 @@ describe ADMesh::STL do
         @stl.stats[:size][axis].must_equal 1
       end
     end
+    it 'must scale by versor' do
+      @stl.scale_versor! 10, 100, 1000
+      @stl.stats[:size][:x].must_equal 10
+      @stl.stats[:size][:y].must_equal 100
+      @stl.stats[:size][:z].must_equal 1000
+    end
+    it 'must scale by versor as array' do
+      @stl.scale_versor! [10, 100, 1000]
+      @stl.stats[:size][:x].must_equal 10
+      @stl.stats[:size][:y].must_equal 100
+      @stl.stats[:size][:z].must_equal 1000
+    end
+    it 'must scale by versor as hash' do
+      @stl.scale_versor! x: 10, y: 100, z: 1000
+      @stl.stats[:size][:x].must_equal 10
+      @stl.stats[:size][:y].must_equal 100
+      @stl.stats[:size][:z].must_equal 1000
+    end
   end
 
   describe 'when opening an non-existing file' do
