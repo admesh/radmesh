@@ -246,5 +246,42 @@ module ADMesh
       error_control_proc(IOError, "Could not open #{path}").call
       self
     end
+
+    def self.default_repair_opts
+      { fixall: true, exact: false, tolerance: 0, increment: 0,
+        nearby: false, iterations: 2, remove_unconnected: false,
+        fill_holes: false, normal_directions: false,
+        normal_values: false, reverse_all: false, verbose: true }
+    end
+
+    def self.exact?(o)
+      o[:exact] || o[:fixall] || o[:nearby] || o[:remove_unconnected] ||
+        o[:fill_holes] || o[:normal_directions]
+    end
+
+    def self.bools_to_ints(a)
+      a.each_with_index do |value, idx|
+        a[idx] = 1 if value.class == TrueClass
+        a[idx] = 0 if value.class == FalseClass
+      end
+      a
+    end
+
+    def self.opts_to_int_array(o)
+      bools_to_ints([o[:fixall], o[:exact], o[:tolerance] != 0, o[:tolerance],
+                     o[:increment] != 0, o[:increment], o[:nearby],
+                     o[:iterations], o[:remove_unconnected], o[:fill_holes],
+                     o[:normal_directions], o[:normal_values], o[:reverse_all],
+                     o[:verbose]])
+    end
+
+    def repair!(opts = {})
+      opts = self.class.default_repair_opts.merge(opts)
+      CADMesh.stl_repair(@stl_ptr, *self.class.opts_to_int_array(opts))
+      error_control_proc(RuntimeError,
+                         'something went wrong during repair').call
+      @exact = true if self.class.exact? opts
+      self
+    end
   end
 end

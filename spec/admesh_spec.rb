@@ -191,6 +191,12 @@ describe ADMesh::STL do
       @stl.open_merge! 'block.stl'
       @stl.calculate_volume!.stats[:volume].must_equal 2
     end
+    it 'must repair without blowing up' do
+      @stl.repair! verbose: false
+    end
+    it 'must repair with set tolerance' do
+      @stl.repair! tolerance: 0.2, verbose: false
+    end
   end
 
   describe 'when opening an non-existing file' do
