@@ -192,5 +192,24 @@ module ADMesh
       end
       self
     end
+
+    def rotate_x!(angle)
+      CADMesh.stl_rotate_x(@stl_ptr, angle)
+      self
+    end
+
+    def rotate_y!(angle)
+      CADMesh.stl_rotate_y(@stl_ptr, angle)
+      self
+    end
+
+    def rotate_z!(angle)
+      CADMesh.stl_rotate_z(@stl_ptr, angle)
+      self
+    end
+
+    def rotate!(axis, angle)
+      send("rotate_#{axis}!", angle)
+    end
   end
 end

@@ -152,6 +152,16 @@ describe ADMesh::STL do
       @stl.stats[:size][:y].must_equal 100
       @stl.stats[:size][:z].must_equal 1000
     end
+    it 'must rotate by each axis' do
+      axes = [:x, :y, :z]
+      axes.each_with_index do |axis, idx|
+        @stl.rotate!(axis, 45)
+        check_axis = axes[(idx + 1) % 3]
+        @stl.stats[:size][axis].must_be_within_epsilon 1
+        @stl.stats[:size][check_axis].must_be_within_epsilon 1.414
+        @stl.rotate!(axis, -45)
+      end
+    end
   end
 
   describe 'when opening an non-existing file' do
