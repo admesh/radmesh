@@ -1,0 +1,7 @@
+:stl_mirror_xy
+:stl_mirror_yz
+:stl_mirror_xz
+:stl_open_merge
+:stl_repair
+walk facets
+deep copy
