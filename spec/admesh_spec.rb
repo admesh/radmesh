@@ -222,11 +222,34 @@ describe ADMesh::STL do
       end
       count.must_equal 12
     end
+    it 'must clone properly' do
+      other = @stl.clone
+      idx = 0
+      while idx < @stl.size
+        @stl[idx].merge(extra: '  ').must_equal other[idx].merge(extra: '  ')
+        idx += 1
+      end
+      other.scale! 10
+      other.stats[:size][:z].must_equal 10
+      @stl.stats[:size][:z].must_equal 1
+      other.stats[:header].must_equal @stl.stats[:header]
+    end
   end
 
   describe 'when opening an non-existing file' do
     it 'must blow up' do
       proc { ADMesh::STL.new 'bad_filename.stl' }.must_raise IOError
+    end
+  end
+
+  describe 'when having an empty STL' do
+    it 'must initialize fine' do
+      ADMesh::STL.new
+    end
+    it 'must open merge fine' do
+      stl = ADMesh::STL.new
+      stl.open_merge! 'block.stl'
+      stl.stats[:size][:x].must_equal 1
     end
   end
 end

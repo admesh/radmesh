@@ -9,20 +9,30 @@ module ADMesh
     attr_accessor :stl_value
     attr_accessor :exact
     attr_accessor :shared
-    private :stl_ptr
-    private :stl_value
-    private :exact
-    private :shared
+    protected :stl_ptr, :stl_value
+    private :exact, :shared
 
-    def initialize(path)
+    def initialize(path = nil)
       @stl_ptr = FFI::MemoryPointer.new CADMesh::STLFile, 1
       @stl_value = CADMesh::STLFile.new @stl_ptr
-      CADMesh.stl_open(@stl_ptr, path)
-      error_control_proc(IOError, "Could not open #{path}").call
+      init if path.nil?
+      open path unless path.nil?
       ObjectSpace.define_finalizer self, self.class.finalize(@stl_ptr)
       @exact = false
       @shared = false
     end
+
+    def init
+      CADMesh.stl_initialize(@stl_ptr)
+      error_control_proc(NoMemoryError, 'Could not initialize').call
+    end
+
+    def open(path)
+      CADMesh.stl_open(@stl_ptr, path)
+      error_control_proc(IOError, "Could not open #{path}").call
+    end
+
+    private :init, :open
 
     def error?
       CADMesh.stl_get_error(@stl_ptr) == 1
@@ -307,6 +317,50 @@ module ADMesh
 
     def to_a
       each_facet.to_a
+    end
+
+    def self.copy_bulk(src, dest, len)
+      LibC.memcpy(dest, src, len)
+    end
+
+    def clone_facets!(c)
+      self.class.copy_bulk(@stl_value[:facet_start].to_ptr,
+                           c.stl_value[:facet_start].to_ptr,
+                           size * CADMesh::STLFacet.size)
+      c
+    end
+
+    def clone_neighbors!(c)
+      self.class.copy_bulk(@stl_value[:neighbors_start],
+                           c.stl_value[:neighbors_start],
+                           size * CADMesh::STLNeighbors.size)
+      c
+    end
+
+    def clone_props!(c)
+      [:fp, :M, :error].each do |key|
+        c.stl_value[key] = @stl_value[key]
+      end
+      c
+    end
+
+    def clone_stats!(c)
+      self.class.copy_bulk(@stl_value[:stats].to_ptr,
+                           c.stl_value[:stats].to_ptr,
+                           CADMesh::STLStats.size)
+      c
+    end
+
+    private :clone_facets!, :clone_neighbors!, :clone_props!, :clone_stats!
+
+    def clone
+      c = clone_props! self.class.new
+      clone_stats! c
+      CADMesh.stl_reallocate(c.stl_ptr)
+      clone_facets! c
+      clone_neighbors! c
+      c.error_control_proc(NoMemoryError, 'could not clone').call
+      c
     end
   end
 end

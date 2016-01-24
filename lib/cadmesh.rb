@@ -55,6 +55,12 @@ module CADMesh
            :extra, [:char, 2]
   end
 
+  # stl_neighbors struct
+  class STLNeighbors < HashableStruct
+    layout :neighbor, [:int, 3],
+           :which_vertex_not, [:char, 3]
+  end
+
   # stl_stats struct
   class STLStats < HashableStruct
     layout :header, [:char, 81],
@@ -165,4 +171,11 @@ module CADMesh
 
   attach_function :stl_clear_error, [:pointer], :void
   attach_function :stl_get_error, [:pointer], :int
+end
+
+# helper module for memcpy
+module LibC
+  extend FFI::Library
+  ffi_lib FFI::Library::LIBC
+  attach_function :memcpy, [:pointer, :pointer, :size_t], :pointer
 end
