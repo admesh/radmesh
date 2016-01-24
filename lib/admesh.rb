@@ -362,5 +362,17 @@ module ADMesh
       c.error_control_proc(NoMemoryError, 'could not clone').call
       c
     end
+
+    # take (almost) all ! methods and create their clone on-demand copies
+    instance_methods.each do |method|
+      next unless method.to_s[-1] == '!'
+      next if method == :!
+      next if method == :clear_error!
+      newmethod = proc do |*args|
+        c = clone
+        c.send(method, *args)
+      end
+      define_method(method.to_s.chomp('!').to_sym, newmethod)
+    end
   end
 end

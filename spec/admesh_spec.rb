@@ -234,6 +234,18 @@ describe ADMesh::STL do
       @stl.stats[:size][:z].must_equal 1
       other.stats[:header].must_equal @stl.stats[:header]
     end
+    it 'must have clone on-demand methods' do
+      @stl.scale(10).stats[:size][:x].must_equal 10
+      @stl.stats[:size][:x].must_equal 1
+
+      @stl.mirror(:x, :y).stats[:min][:z].must_equal(-1)
+      @stl.stats[:min][:z].must_equal 0
+
+      @stl.translate_relative(x: 5,
+                              y: 0,
+                              z: 0).stats[:min][:x].must_equal 5
+      @stl.stats[:min][:x].must_equal 0
+    end
   end
 
   describe 'when opening an non-existing file' do
