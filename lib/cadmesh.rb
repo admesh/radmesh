@@ -8,8 +8,10 @@ module CADMesh
   # for JRuby
   begin
     CharArray = FFI::StructLayout::CharArray
+    InlineArray = FFI::Struct::InlineArray
   rescue NameError
     CharArray = FFI::StructLayout::CharArrayProxy
+    InlineArray = FFI::StructLayout::ArrayProxy
   end
 
   enum :STLType, [:binary, :ascii, :inmemory]
@@ -26,7 +28,8 @@ module CADMesh
 
     def self.value_to_value(value)
       return value.to_s if value.class == CharArray
-      return value.to_hash if value.class == HashableStruct
+      return value.to_a.map(&:to_hash) if value.class == InlineArray
+      return value.to_hash if value.class <= HashableStruct
       value
     end
   end
@@ -36,6 +39,20 @@ module CADMesh
     layout :x, :float,
            :y, :float,
            :z, :float
+  end
+
+  # stl_normal struct
+  class STLNormal < HashableStruct
+    layout :x, :float,
+           :y, :float,
+           :z, :float
+  end
+
+  # stl_facet struct
+  class STLFacet < HashableStruct
+    layout :normal, STLNormal,
+           :vertex, [STLVertex, 3],
+           :extra, [:char, 2]
   end
 
   # stl_stats struct
@@ -77,7 +94,7 @@ module CADMesh
   # stl_file struct
   class STLFile < HashableStruct
     layout :fp, :pointer,
-           :facet_start, :pointer,
+           :facet_start, STLFacet.ptr,
            :edge_start, :pointer,
            :heads, :pointer,
            :tail, :pointer,

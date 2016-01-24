@@ -283,5 +283,30 @@ module ADMesh
       @exact = true if self.class.exact? opts
       self
     end
+
+    def size
+      @stl_value[:stats][:number_of_facets]
+    end
+
+    def [](idx)
+      fail IndexError,
+           "index #{idx} outside of STL bounds: 0..#{size - 1}" if idx >= size
+      ptr = @stl_value[:facet_start].to_ptr + (idx * CADMesh::STLFacet.size)
+      value = CADMesh::STLFacet.new ptr
+      value.to_hash
+    end
+
+    def each_facet
+      return to_enum(:each_facet) unless block_given?
+      idx = 0
+      while idx < size
+        yield self[idx]
+        idx += 1
+      end
+    end
+
+    def to_a
+      each_facet.to_a
+    end
   end
 end

@@ -197,6 +197,31 @@ describe ADMesh::STL do
     it 'must repair with set tolerance' do
       @stl.repair! tolerance: 0.2, verbose: false
     end
+    it 'must have size 12' do
+      @stl.size.must_equal 12
+    end
+    it 'must give array of size 12' do
+      @stl.to_a.size.must_equal 12
+    end
+    it 'must access facets on index' do
+      # don't rally test extra, because it might be random rubbish
+      @stl[5].merge(extra: '  ').must_equal normal: { x: 0, y: -1, z: -0 },
+                                            vertex: [{ x: 1, y: 0, z: 1 },
+                                                     { x: 0, y: 0, z: 0 },
+                                                     { x: 1, y: 0, z: 0 }],
+                                            extra: '  '
+    end
+    it 'must blow up when accessing facets on index out of range' do
+      proc { @stl[13] }.must_raise IndexError
+    end
+    it 'must walk facets' do
+      count = 0
+      @stl.each_facet do |facet|
+        facet.must_be_kind_of Hash
+        count += 1
+      end
+      count.must_equal 12
+    end
   end
 
   describe 'when opening an non-existing file' do
