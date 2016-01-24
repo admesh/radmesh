@@ -153,16 +153,14 @@ module ADMesh
     end
 
     def self.to_vec(arg)
+      hash = { x: 0, y: 0, z: 0 }.merge(arg)
+      [hash[:x], hash[:y], hash[:z]]
+    rescue
       begin
-        vec = [arg[:x], arg[:y], arg[:z]]
+        [arg.x, arg.y, arg.z]
       rescue
-        begin
-          vec = [arg.x, arg.y, arg.z]
-        rescue
-          vec = [arg[0], arg[1], arg[2]]
-        end
+        [arg[0], arg[1], arg[2]]
       end
-      vec
     end
 
     def self.vector_probe(args)

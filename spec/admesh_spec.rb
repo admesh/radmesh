@@ -89,35 +89,35 @@ describe ADMesh::STL do
       @stl.stats[:min][:z].must_equal 30
     end
     it 'must translate to absolute coordinates array' do
-      @stl.translate! [10, 20, 30]
-      @stl.stats[:min][:x].must_equal 10
+      @stl.translate! [0, 20, 30]
+      @stl.stats[:min][:x].must_equal 0
       @stl.stats[:min][:y].must_equal 20
       @stl.stats[:min][:z].must_equal 30
     end
     it 'must translate to absolute coordinates hash' do
-      @stl.translate! x: 10, y: 20, z: 30
-      @stl.stats[:min][:x].must_equal 10
+      @stl.translate! y: 20, z: 30
+      @stl.stats[:min][:x].must_equal 0
       @stl.stats[:min][:y].must_equal 20
       @stl.stats[:min][:z].must_equal 30
     end
     it 'must translate by relative coordinates' do
-      @stl.translate_relative! 5, 10, 15
-      @stl.translate_relative! 5, 10, 15
-      @stl.stats[:min][:x].must_equal 10
+      @stl.translate_relative! 0, 10, 15
+      @stl.translate_relative! 0, 10, 15
+      @stl.stats[:min][:x].must_equal 0
       @stl.stats[:min][:y].must_equal 20
       @stl.stats[:min][:z].must_equal 30
     end
     it 'must translate by relative coordinates array' do
-      @stl.translate_relative! [5, 10, 15]
-      @stl.translate_relative! [5, 10, 15]
-      @stl.stats[:min][:x].must_equal 10
+      @stl.translate_relative! [0, 10, 15]
+      @stl.translate_relative! [0, 10, 15]
+      @stl.stats[:min][:x].must_equal 0
       @stl.stats[:min][:y].must_equal 20
       @stl.stats[:min][:z].must_equal 30
     end
     it 'must translate by relative coordinates hash' do
-      @stl.translate_relative! x: 5, y: 10, z: 15
-      @stl.translate_relative! x: 5, y: 10, z: 15
-      @stl.stats[:min][:x].must_equal 10
+      @stl.translate_relative! y: 10, z: 15
+      @stl.translate_relative! y: 10, z: 15
+      @stl.stats[:min][:x].must_equal 0
       @stl.stats[:min][:y].must_equal 20
       @stl.stats[:min][:z].must_equal 30
     end
@@ -241,9 +241,7 @@ describe ADMesh::STL do
       @stl.mirror(:x, :y).stats[:min][:z].must_equal(-1)
       @stl.stats[:min][:z].must_equal 0
 
-      @stl.translate_relative(x: 5,
-                              y: 0,
-                              z: 0).stats[:min][:x].must_equal 5
+      @stl.translate_relative(x: 5).stats[:min][:x].must_equal 5
       @stl.stats[:min][:x].must_equal 0
     end
   end
