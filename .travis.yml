@@ -11,7 +11,7 @@ env:
 cache:
   directories:
   - $TRAVIS_BUILD_DIR/admesh-$ADMESH
-  - $HOME/.rvm
+  - $HOME/.rvm/gems
 before_install:
 - if [ ! -f admesh-$ADMESH/.libs/admesh ]; then
       wget https://github.com/admesh/admesh/releases/download/v$ADMESH/admesh-$ADMESH.tar.gz;
@@ -23,8 +23,7 @@ before_install:
       cp src/stl.h src/admesh/stl.h;
       cd ..;
   fi
-install:
-- gem install rake ffi minitest rubocop
+install: bundle install
 script:
-- rubocop
+- rake rubocop
 - LD_LIBRARY_PATH=admesh-$ADMESH/.libs rake test
