@@ -1,3 +1,4 @@
+require 'radmesh/version'
 require 'cadmesh'
 require 'ffi'
 
