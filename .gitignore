@@ -38,3 +38,6 @@ build/
 
 # hidden block files form tests
 .block*
+
+# ignore the generated documentation
+/doc
