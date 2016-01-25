@@ -1,10 +1,10 @@
 gem 'minitest'
 require 'minitest/autorun'
-require 'admesh'
+require 'radmesh'
 
-describe ADMesh::STL do
+describe RADMesh::STL do
   before do
-    @stl = ADMesh::STL.new 'block.stl'
+    @stl = RADMesh::STL.new 'block.stl'
     @axes = [:x, :y, :z]
   end
 
@@ -38,12 +38,12 @@ describe ADMesh::STL do
     end
     it 'must be able to write as ASCII STL' do
       @stl.write_ascii '.block_ascii.stl'
-      stl_ascii = ADMesh::STL.new '.block_ascii.stl'
+      stl_ascii = RADMesh::STL.new '.block_ascii.stl'
       stl_ascii.stats[:type].must_equal :ascii
     end
     it 'must be able to write as binary STL' do
       @stl.write_binary '.block_binary.stl'
-      stl_binary = ADMesh::STL.new '.block_binary.stl'
+      stl_binary = RADMesh::STL.new '.block_binary.stl'
       stl_binary.stats[:type].must_equal :binary
     end
     it 'must be able to write as OBJ' do
@@ -246,22 +246,22 @@ describe ADMesh::STL do
       @stl.stats[:min][:x].must_equal 0
     end
     it 'must have normal string representation' do
-      @stl.to_s.must_equal '#<ADMesh::STL header="solid  admesh">'
+      @stl.to_s.must_equal '#<RADMesh::STL header="solid  admesh">'
     end
   end
 
   describe 'when opening an non-existing file' do
     it 'must blow up' do
-      proc { ADMesh::STL.new 'bad_filename.stl' }.must_raise IOError
+      proc { RADMesh::STL.new 'bad_filename.stl' }.must_raise IOError
     end
   end
 
   describe 'when having an empty STL' do
     it 'must initialize fine' do
-      ADMesh::STL.new
+      RADMesh::STL.new
     end
     it 'must open merge fine' do
-      stl = ADMesh::STL.new
+      stl = RADMesh::STL.new
       stl.open_merge! 'block.stl'
       stl.stats[:size][:x].must_equal 1
     end

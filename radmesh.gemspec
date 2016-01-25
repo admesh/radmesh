@@ -1,5 +1,5 @@
 Gem::Specification.new do |s|
-  s.name        = 'admesh'
+  s.name        = 'radmesh'
   s.version     = '0.98.1'
   s.date        = Time.now.strftime('%Y-%m-%d')
   s.summary     = 'Ruby wrapper around ADMesh'

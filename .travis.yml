@@ -30,7 +30,7 @@ deploy:
   provider: rubygems
   api_key:
     secure: xByAM2bZwI2+mn2Hw7E/LQgees7bBM2eKqgTgF35zANLCaF0rvJIXv0OeBMwkLunZaH6aPn3thVyuzeLgrBGc811Q1hr/VDEmG2a905QNwlyeRqQpNdvgdSjPZybisLQn4pqiqkuHDh8PvcLEaLkLSjtMLQhnM7CiR9cuHkyvmmsqLuluGJxQgNhbgRmNDByk8OPjHiAbyKHRc3qdbEtrRiFJRKnpn7cwKRRLSfux+KSjvgTdlKSn5Bvu6R4rXewuN+pbgYFivYOTOacYE1vFK6VcE6wBMk43fT6xkoyDArdIKJmdF3FkdSic57HLjHMF8Qvj1egWrUy2MS+jk6HoERrTt5OEHxtBHXU43RAYKMQl8tuaDTUMl7FLGM28roMnNJdTkhHNJW8uU9k2QixxLgqewK6ap27q3mS3346k7yratQVUtLrYdQnY7Kn0Jnl0rS1oLtiFYLDRgf8jvzpiYA2VddcEEd6wPArJOXpW3CSBM1+QMsEKJIojt/yy7w/1AJeCpao4VhuVl9VKOMUNkh0VlikTrSRUFqCdnmUuGBsFLQMiUr2anju6tBSojVUptDb/LIQOw2ZayuYY9XbY0hspsqmeyqhEQq2HPyn21xYnNbkFtSC6BTeY5wzH8HFnF/hIQRRaYk7Mu5zJv8bFs0nhtCPAHiEthvxMyrQg2g=
-  gem: admesh
+  gem: radmesh
   on:
     tags: true
-    repo: admesh/rubygem-admesh
+    repo: admesh/radmesh

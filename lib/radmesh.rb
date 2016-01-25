@@ -10,7 +10,7 @@ require 'ffi'
 #         generated.
 
 # High level wrapper around ADMesh
-module ADMesh
+module RADMesh
   # Class representing an STL file.
   # It has factes and stats.
   class STL
@@ -664,7 +664,7 @@ module ADMesh
     #
     # @return [String]
     def to_s
-      "#<ADMesh::STL header=\"#{stats[:header]}\">"
+      "#<RADMesh::STL header=\"#{stats[:header]}\">"
     end
 
     # @!visibility private

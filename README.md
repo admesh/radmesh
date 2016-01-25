@@ -1,5 +1,5 @@
-admesh
-======
+radmesh
+=======
 
 ADMesh is a library for processing triangulated solid meshes.
 Currently, ADMesh only reads the STL file format that is used
@@ -12,10 +12,10 @@ in version 0.98.x.
 Usage
 -----
 
-    require 'admesh'
+    require 'radmesh'
     
     # load an STL file
-    stl = ADMesh::STL.new 'file.stl'
+    stl = RADMesh::STL.new 'file.stl'
     
     # observe the available methods
     p stl.methods
