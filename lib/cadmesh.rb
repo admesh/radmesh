@@ -1,6 +1,7 @@
 require 'ffi'
 
 # Low level wrapper around C admesh library
+# @!visibility private
 module CADMesh
   extend FFI::Library
   ffi_lib 'admesh.so.1.0.0'
@@ -17,7 +18,9 @@ module CADMesh
   enum :STLType, [:binary, :ascii, :inmemory]
 
   # FFI::Struct that has to_hash
+  # @!visibility private
   class HashableStruct < FFI::Struct
+    # @!visibility private
     def to_hash
       hash = {}
       members.each do |key|
@@ -26,6 +29,7 @@ module CADMesh
       hash
     end
 
+    # @!visibility private
     def self.value_to_value(value)
       return value.to_s if value.class == CharArray
       return value.to_a.map(&:to_hash) if value.class == InlineArray
@@ -35,6 +39,7 @@ module CADMesh
   end
 
   # stl_vertex struct
+  # @!visibility private
   class STLVertex < HashableStruct
     layout :x, :float,
            :y, :float,
@@ -42,6 +47,7 @@ module CADMesh
   end
 
   # stl_normal struct
+  # @!visibility private
   class STLNormal < HashableStruct
     layout :x, :float,
            :y, :float,
@@ -49,6 +55,7 @@ module CADMesh
   end
 
   # stl_facet struct
+  # @!visibility private
   class STLFacet < HashableStruct
     layout :normal, STLNormal,
            :vertex, [STLVertex, 3],
@@ -56,12 +63,14 @@ module CADMesh
   end
 
   # stl_neighbors struct
+  # @!visibility private
   class STLNeighbors < HashableStruct
     layout :neighbor, [:int, 3],
            :which_vertex_not, [:char, 3]
   end
 
   # stl_stats struct
+  # @!visibility private
   class STLStats < HashableStruct
     layout :header, [:char, 81],
            :type, :STLType,
@@ -98,6 +107,7 @@ module CADMesh
   end
 
   # stl_file struct
+  # @!visibility private
   class STLFile < HashableStruct
     layout :fp, :pointer,
            :facet_start, STLFacet.ptr,
@@ -174,6 +184,7 @@ module CADMesh
 end
 
 # helper module for memcpy
+# @!visibility private
 module LibC
   extend FFI::Library
   ffi_lib FFI::Library::LIBC
