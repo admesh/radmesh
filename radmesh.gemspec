@@ -4,7 +4,6 @@ require File.expand_path('../lib/radmesh/version', __FILE__)
 Gem::Specification.new do |s|
   s.name        = 'radmesh'
   s.version     = RADMesh::VERSION
-  s.date        = Time.now.strftime('%Y-%m-%d')
   s.summary     = 'Ruby wrapper around ADMesh'
   s.description = <<-eof
     ADMesh is a library for processing triangulated solid meshes.
