@@ -1,3 +1,4 @@
+require 'radmesh/os'
 require 'ffi'
 
 module RADMesh
@@ -5,7 +6,14 @@ module RADMesh
   # @!visibility private
   module CADMesh
     extend FFI::Library
-    ffi_lib 'admesh.so.1.0.0'
+
+    if OS.mac?
+      ffi_lib 'admesh.1.dylib'
+    elsif OS.windows?
+      ffi_lib 'admesh.dll'
+    else
+      ffi_lib 'admesh.so.1.0.0'
+    end
 
     # for JRuby
     begin
