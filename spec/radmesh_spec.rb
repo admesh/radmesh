@@ -3,8 +3,10 @@ require 'minitest/autorun'
 require 'radmesh'
 
 describe RADMesh::STL do
+  STL_FILE = File.expand_path('../fixtures/block.stl', __FILE__)
+
   before do
-    @stl = RADMesh::STL.new 'block.stl'
+    @stl = RADMesh::STL.new STL_FILE
     @axes = [:x, :y, :z]
   end
 
@@ -189,7 +191,7 @@ describe RADMesh::STL do
     end
     it 'must open merge other STLs' do
       @stl.translate! 10, 10, 10
-      @stl.open_merge! 'block.stl'
+      @stl.open_merge! STL_FILE
       @stl.calculate_volume!.stats[:volume].must_equal 2
     end
     it 'must repair without blowing up' do
@@ -262,7 +264,7 @@ describe RADMesh::STL do
     end
     it 'must open merge fine' do
       stl = RADMesh::STL.new
-      stl.open_merge! 'block.stl'
+      stl.open_merge! STL_FILE
       stl.stats[:size][:x].must_equal 1
     end
   end

@@ -1,6 +1,9 @@
+# coding: utf-8
+require File.expand_path('../lib/radmesh/version', __FILE__)
+
 Gem::Specification.new do |s|
   s.name        = 'radmesh'
-  s.version     = '0.98.1'
+  s.version     = RADMesh::VERSION
   s.date        = Time.now.strftime('%Y-%m-%d')
   s.summary     = 'Ruby wrapper around ADMesh'
   s.description = <<-eof
@@ -13,7 +16,7 @@ Gem::Specification.new do |s|
   s.authors     = ['Miro Hrončok']
   s.email       = 'miro@hroncok.cz'
   s.files       = Dir.glob('{doc,lib,spec}/**/*') +
-  ['README.md', 'LICENSE', 'Rakefile', 'Gemfile', 'block.stl', __FILE__]
+  ['README.md', 'LICENSE', 'Rakefile', 'Gemfile', __FILE__]
   s.homepage =
     'https://github.com/admesh/rubygem-admesh'
   s.platform = Gem::Platform::RUBY
