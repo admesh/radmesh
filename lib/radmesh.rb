@@ -1,5 +1,6 @@
 require 'radmesh/version'
-require 'cadmesh'
+require 'radmesh/cadmesh'
+require 'radmesh/libc'
 require 'ffi'
 
 # @!macro [new] returnself
