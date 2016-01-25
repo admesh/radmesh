@@ -245,6 +245,9 @@ describe ADMesh::STL do
       @stl.translate_relative(x: 5).stats[:min][:x].must_equal 5
       @stl.stats[:min][:x].must_equal 0
     end
+    it 'must have normal string representation' do
+      @stl.to_s.must_equal '#<ADMesh::STL header="solid  admesh">'
+    end
   end
 
   describe 'when opening an non-existing file' do

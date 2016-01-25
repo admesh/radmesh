@@ -660,6 +660,13 @@ module ADMesh
       each_facet.to_a
     end
 
+    # Get a String representation of STL
+    #
+    # @return [String]
+    def to_s
+      "#<ADMesh::STL header=\"#{stats[:header]}\">"
+    end
+
     # @!visibility private
     def self.copy_bulk(src, dest, len)
       LibC.memcpy(dest, src, len)
