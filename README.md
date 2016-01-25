@@ -49,4 +49,5 @@ Usage
     # and save it
     stl.write_binary 'block2.stl'
 
-You can generate the full documentation with [yard](http://yardoc.org/).
+You can generate the full documentation with [yard](http://yardoc.org/)
+or see it online on [RubyDoc.info](http://www.rubydoc.info/gems/radmesh/RADMesh/STL).
