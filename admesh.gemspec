@@ -8,12 +8,12 @@ Gem::Specification.new do |s|
     Currently, ADMesh only reads the STL file format that is used
     for rapid prototyping applications, although it can write STL,
     VRML, OFF, and DXF files. Those are bindings for Ruby.
-    You'll need ADmesh C library in version 0.98.x.
+    You'll need the ADMesh C library in version 0.98.x.
   eof
   s.authors     = ['Miro Hrončok']
   s.email       = 'miro@hroncok.cz'
   s.files       = Dir.glob('{doc,lib,spec}/**/*') +
-  ['LICENSE', 'Rakefile', 'Gemfile', 'block.stl', __FILE__]
+  ['README.md', 'LICENSE', 'Rakefile', 'Gemfile', 'block.stl', __FILE__]
   s.homepage =
     'https://github.com/hroncok/rubygem-admesh'
   s.platform = Gem::Platform::RUBY
