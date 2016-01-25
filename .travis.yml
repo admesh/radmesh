@@ -25,5 +25,4 @@ before_install:
   fi
 install: bundle install
 script:
-- rake rubocop
-- LD_LIBRARY_PATH=admesh-$ADMESH/.libs rake test
+- LD_LIBRARY_PATH=admesh-$ADMESH/.libs rake
