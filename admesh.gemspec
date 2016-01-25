@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
   s.files       = Dir.glob('{doc,lib,spec}/**/*') +
   ['README.md', 'LICENSE', 'Rakefile', 'Gemfile', 'block.stl', __FILE__]
   s.homepage =
-    'https://github.com/hroncok/rubygem-admesh'
+    'https://github.com/admesh/rubygem-admesh'
   s.platform = Gem::Platform::RUBY
   s.license = 'GPL-2.0+'
 end
