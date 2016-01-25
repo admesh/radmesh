@@ -152,8 +152,8 @@ module ADMesh
       self
     end
 
-    def self.to_vec(arg)
-      hash = { x: 0, y: 0, z: 0 }.merge(arg)
+    def self.to_vec(arg, default = 0)
+      hash = { x: default, y: default, z: default }.merge(arg)
       [hash[:x], hash[:y], hash[:z]]
     rescue
       begin
@@ -163,11 +163,11 @@ module ADMesh
       end
     end
 
-    def self.vector_probe(args)
+    def self.vector_probe(args, default = 0)
       if args.size == 3
         vec = args
       elsif args.size == 1
-        vec = to_vec(args[0])
+        vec = to_vec(args[0], default)
       else
         fail ArgumentError,
              "wrong number of arguments (#{args.size} for 1 or 3)"
@@ -193,7 +193,7 @@ module ADMesh
     end
 
     def scale_versor!(*args)
-      vec = self.class.vector_probe args
+      vec = self.class.vector_probe args, 1
       FFI::MemoryPointer.new(:float, 3) do |p|
         p.write_array_of_float(vec)
         CADMesh.stl_scale_versor(@stl_ptr, p)

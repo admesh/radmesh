@@ -137,22 +137,22 @@ describe ADMesh::STL do
       end
     end
     it 'must scale by versor' do
-      @stl.scale_versor! 10, 100, 1000
-      @stl.stats[:size][:x].must_equal 10
-      @stl.stats[:size][:y].must_equal 100
-      @stl.stats[:size][:z].must_equal 1000
+      @stl.scale_versor! 1, 10, 100
+      @stl.stats[:size][:x].must_equal 1
+      @stl.stats[:size][:y].must_equal 10
+      @stl.stats[:size][:z].must_equal 100
     end
     it 'must scale by versor as array' do
-      @stl.scale_versor! [10, 100, 1000]
-      @stl.stats[:size][:x].must_equal 10
-      @stl.stats[:size][:y].must_equal 100
-      @stl.stats[:size][:z].must_equal 1000
+      @stl.scale_versor! [1, 10, 100]
+      @stl.stats[:size][:x].must_equal 1
+      @stl.stats[:size][:y].must_equal 10
+      @stl.stats[:size][:z].must_equal 100
     end
     it 'must scale by versor as hash' do
-      @stl.scale_versor! x: 10, y: 100, z: 1000
-      @stl.stats[:size][:x].must_equal 10
-      @stl.stats[:size][:y].must_equal 100
-      @stl.stats[:size][:z].must_equal 1000
+      @stl.scale_versor! y: 10, z: 100
+      @stl.stats[:size][:x].must_equal 1
+      @stl.stats[:size][:y].must_equal 10
+      @stl.stats[:size][:z].must_equal 100
     end
     it 'must rotate by each axis' do
       @axes.each_with_index do |axis, idx|
