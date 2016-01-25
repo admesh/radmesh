@@ -1,13 +1,21 @@
 Gem::Specification.new do |s|
   s.name        = 'admesh'
-  s.version     = '0.0.0'
-  s.date        = '2015-01-21'
+  s.version     = '0.98.1'
+  s.date        = Time.now.strftime('%Y-%m-%d')
   s.summary     = 'Ruby wrapper around ADMesh'
-  s.description = 'Ruby wrapper around ADMesh'
+  s.description = <<-eof
+    ADMesh is a library for processing triangulated solid meshes.
+    Currently, ADMesh only reads the STL file format that is used
+    for rapid prototyping applications, although it can write STL,
+    VRML, OFF, and DXF files. Those are bindings for Ruby.
+    You'll need ADmesh C library in version 0.98.x.
+  eof
   s.authors     = ['Miro Hrončok']
   s.email       = 'miro@hroncok.cz'
-  s.files       = Dir.glob('lib/*.rb')
-  s.homepage    =
+  s.files       = Dir.glob('{doc,lib,spec}/**/*') +
+  ['LICENSE', 'Rakefile', 'Gemfile', 'block.stl', __FILE__]
+  s.homepage =
     'https://github.com/hroncok/rubygem-admesh'
+  s.platform = Gem::Platform::RUBY
   s.license = 'GPL-2.0+'
 end
