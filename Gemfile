@@ -7,3 +7,7 @@ group :test do
   gem 'minitest', '~>5.8'
   gem 'rubocop'
 end
+
+group :doc do
+  gem 'yard'
+end
