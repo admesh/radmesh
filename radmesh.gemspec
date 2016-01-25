@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
   s.authors     = ['Miro Hrončok']
   s.email       = 'miro@hroncok.cz'
   s.files       = Dir.glob('{doc,lib,spec}/**/*') +
-  ['README.md', 'LICENSE', 'Rakefile', 'Gemfile', 'block.stl', __FILE__]
+  ['README.md', 'LICENSE', 'Rakefile', 'Gemfile', __FILE__]
   s.homepage =
     'https://github.com/admesh/rubygem-admesh'
   s.platform = Gem::Platform::RUBY
