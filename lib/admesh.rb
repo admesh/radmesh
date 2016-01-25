@@ -5,12 +5,17 @@ require 'ffi'
 module ADMesh
   # STL file
   class STL
+    protected
+
     attr_accessor :stl_ptr
     attr_accessor :stl_value
+
+    private
+
     attr_accessor :exact
     attr_accessor :shared
-    protected :stl_ptr, :stl_value
-    private :exact, :shared
+
+    public
 
     def initialize(path = nil)
       @stl_ptr = FFI::MemoryPointer.new CADMesh::STLFile, 1
