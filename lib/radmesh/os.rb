@@ -7,7 +7,6 @@ module RADMesh
       def is?(what)
         what.match(RbConfig::CONFIG['host_os'])
       end
-      alias is is?
 
       # @!visibility private
       def to_s
