@@ -72,7 +72,7 @@ module RADMesh
       proc do
         if error?
           clear_error!
-          fail exception, message
+          raise exception, message
         end
       end
     end
@@ -337,8 +337,8 @@ module RADMesh
       elsif args.size == 1
         vec = to_vec(args[0], default)
       else
-        fail ArgumentError,
-             "wrong number of arguments (#{args.size} for 1 or 3)"
+        raise ArgumentError,
+              "wrong number of arguments (#{args.size} for 1 or 3)"
       end
       vec
     end
@@ -518,8 +518,8 @@ module RADMesh
     #                        the arguments could not be parsed
     def mirror!(*args)
       args = args[0] if args.size == 1
-      fail ArgumentError,
-           "wrong number of arguments (#{args.size} for 2)" if args.size != 2
+      raise ArgumentError,
+            "wrong number of arguments (#{args.size} for 2)" if args.size != 2
       args.sort!
       begin
         send("mirror_#{args[0]}#{args[1]}!")
@@ -634,8 +634,8 @@ module RADMesh
     #
     # @return [Hash] hash with the facet data
     def [](idx)
-      fail IndexError,
-           "index #{idx} outside of STL bounds: 0..#{size - 1}" if idx >= size
+      raise IndexError,
+            "index #{idx} outside of STL bounds: 0..#{size - 1}" if idx >= size
       ptr = @stl_value[:facet_start].to_ptr + (idx * CADMesh::STLFacet.size)
       value = CADMesh::STLFacet.new ptr
       value.to_hash
