@@ -20,4 +20,5 @@ Gem::Specification.new do |s|
     'https://github.com/admesh/rubygem-admesh'
   s.platform = Gem::Platform::RUBY
   s.license = 'GPL-2.0+'
+  s.add_runtime_dependency 'ffi', '~> 1.9'
 end
