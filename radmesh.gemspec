@@ -15,10 +15,10 @@ Gem::Specification.new do |s|
   s.authors     = ['Miro Hrončok']
   s.email       = 'miro@hroncok.cz'
   s.files       = Dir.glob('{doc,lib,spec}/**/*') +
-  ['README.md', 'LICENSE', 'Rakefile', 'Gemfile', __FILE__]
+                  ['README.md', 'LICENSE', 'Rakefile', 'Gemfile', __FILE__]
   s.homepage =
     'https://github.com/admesh/rubygem-admesh'
-  s.platform = Gem::Platform::RUBY
-  s.license = 'GPL-2.0+'
+  s.platform    = Gem::Platform::RUBY
+  s.license     = 'GPL-2.0+'
   s.add_runtime_dependency 'ffi', '~> 1.9'
 end
